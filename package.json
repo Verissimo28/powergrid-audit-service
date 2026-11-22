@@ -9,14 +9,19 @@
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test",
-    "lint": "echo 'lint do audit-service será configurado na etapa de qualidade'"
+    "lint": "echo 'lint do audit-service será configurado na etapa de qualidade'",
+    "db:migrate": "psql \"$AUDIT_DATABASE_URL\" -f src/database/migrations/001_initial.sql"
   },
   "dependencies": {
+    "amqplib": "^2.4.0",
     "dotenv": "16.4.7",
-    "fastify": "5.2.1"
+    "fastify": "5.2.1",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.8",
     "@types/node": "22.10.2",
+    "@types/pg": "^8.23.1",
     "tsx": "4.19.2",
     "typescript": "5.7.2"
   }
