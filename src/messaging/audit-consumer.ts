@@ -6,6 +6,8 @@ import amqp, {
 import { auditPool } from '../database/pool.js';
 import { AuditEventRepository } from '../audit/audit-event-repository.js';
 
+type RabbitConnector = (url: string) => Promise<ChannelModel>;
+
 type IncomingEvent = {
   eventId: string;
   eventType: string;
@@ -47,6 +49,7 @@ export class AuditConsumer {
     private readonly rabbitUrl: string,
     private readonly exchange = 'powergrid.events',
     private readonly queue = 'audit.events',
+    private readonly connectRabbit: RabbitConnector = (url) => amqp.connect(url),
   ) {}
 
   public async start(): Promise<void> {
@@ -62,7 +65,7 @@ export class AuditConsumer {
   }
 
   private async connect(): Promise<void> {
-    const connection = await amqp.connect(this.rabbitUrl);
+    const connection = await this.connectRabbit(this.rabbitUrl);
     const channel = await connection.createChannel();
 
     this.connection = connection;

@@ -8,8 +8,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --test",
-    "lint": "echo 'lint do audit-service será configurado na etapa de qualidade'",
+    "test": "tsx --test tests/unit/*.test.ts",
+    "lint": "echo 'lint do audit-service ser\u00e1 configurado na etapa de qualidade'",
     "db:migrate": "psql \"$AUDIT_DATABASE_URL\" -f src/database/migrations/001_initial.sql"
   },
   "dependencies": {
